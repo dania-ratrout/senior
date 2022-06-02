@@ -18,6 +18,10 @@ if(isset($_SESSION['id'])){
 
 	<!-- title -->
 	<title>Ps-Khan</title>
+	<!-- title -->
+	<title>Ps-Khan</title>
+	
+	
 
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
