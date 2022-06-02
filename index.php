@@ -17,9 +17,8 @@ if(isset($_SESSION['id'])){
 	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
 	<!-- title -->
-	<title>Ps-Khan</title>
-	<!-- title -->
-	<title>Ps-Khan</title>
+	<title>Ps-Khan jjj</title>
+
 	
 	
 
