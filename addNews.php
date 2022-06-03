@@ -1,3 +1,11 @@
+<?php 
+session_start();
+if(empty($_SESSION)){
+	header("LOCATION: index.php");
+};
+require_once('handlers/db.php');
+$news=getWhere('news', 'status = 1');
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +15,7 @@
 	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
 	<!-- title -->
-	<title>login</title>
+	<title>Add product</title>
 
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
@@ -28,12 +36,25 @@
 	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
 	<!-- main style -->
 	<link rel="stylesheet" href="assets/css/main.css">
-	<!-- custom style -->
-	<link rel="stylesheet" href="assets/css/custom2.css">
 	<!-- responsive -->
-	<link rel="stylesheet" href="assets/css/custom.css">
-	<link rel="stylesheet" href="assets/css/responsive.css">
-
+	<link rel="stylesheet" href="assets/css/myorder.css">
+	<link rel="stylesheet" href="assets/css/custom3.css">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700"
+    />
+    <!-- https://fonts.google.com/specimen/Roboto -->
+    <link rel="stylesheet" href="css/fontawesome.min.css" />
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="jquery-ui-datepicker/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="css/templatemo-style.css">
+    <!--
+        
+	Product Admin CSS Template
+	https://templatemo.com/tm-524-product-admin
+	-->
 </head>
 <body>
 	
@@ -46,7 +67,7 @@
     <!--PreLoader Ends-->
 	
 	<!-- header -->
-	<div class="top-header-area-custom" id="sticker">
+	<div class="top-header-area" id="sticker">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-sm-12 text-center">
@@ -60,7 +81,33 @@
 						<!-- logo -->
 
 						<!-- menu start -->
-					
+						<nav class="main-menu">
+							<ul>
+								<li class="current-list-item"><a href="index.php">Home</a></li>
+								<li><a href="shop.php">Shop</a></li>
+                                <li><a href="news.php">News</a></li>
+                                <li><a href="contact.php">Contact</a></li>
+                                <li><a href="about.php">About</a></li>
+								<li>
+									<div class="header-icons">
+										<a class="shopping-cart" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+									<i>	<a class="login" href="login.php"><i class="fas fa-user"></i></a>
+									<ul class="sub-menu">
+										<?php if(isset($_session['login'])){?>
+
+											<li><a href="index.php"> Logout</a></li>
+
+											<?php } else { ?>
+										<li><a href="login.php">Login</a></li>
+										<li><a href="register.php">Customer Registration</a></li>
+										<li><a href="registerOwner.php"> Products Owner's Registration</a></li>
+										<?php }  ?>
+										</ul>										
+								</i>
+									</div>
+								</li>
+						</nav>
 						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 						<div class="mobile-menu"></div>
 						<!-- menu end -->
@@ -89,47 +136,51 @@
 			</div>
 		</div>
 		<!-- end search arewa -->
-		
-		<!--login-->
-		<div class="login-reg-panel">
-          <!--  <div class="login-info-box">
-                <h2>Have an account?</h2>
-               
-                <label id="label-register" for="log-reg-show">Login</label>
-                <input type="radio" name="active-log-panel" id="log-reg-show"  checked="checked">
-            </div> -->
-                                
-            <div class="register-info-box">
-                <h2>Don't have an account?</h2>
-               
-                <a id="label-login" href="register.php">Register</a>
-               <input type="radio" name="active-log-panel" id="log-login-show" >
-            </div>
-                                
-            <div class="white-panel">
-                <div class="login-show">
-                    <h2>LOGIN</h2>
-					<form>
-                    <input type="text" placeholder="Email" required>
-                    <input type="password" placeholder="Password" required>
-					<button  type="submit" class="btnlogin " >Login</button>
-					</form>
-					<p>Don't have an account?<a href="register.php">Click here</a></p>
+		<div class="myorder">
+		<div class="container py-5">
+        <div class="row">
+
+            <div class="col-md-6 offset-md-3">
+                <?php 
+                    if(isset($_SESSION['create'])){ ?>
+                        <div class="aletr alert-success h-10 d-flex justify-content-center align-items-center mb-5">
+                            <?= $_SESSION['create']; ?>
+                        </div>
+                    <?php 
+                        unset($_SESSION['create']);    
+                }
+                ?>
+                <div class="card w-auto">
+                    <div class="card-body p-5">
+                        <form action="handlers/db.php" method="post" enctype="multipart/form-data">
+														<h3 class="mb-3 text-dark">Add New</h3>
+                            <div class="form-group">
+                              <label class=" text-dark">New Title</label>
+                              <input type="text" name="title" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <label class=" text-dark">Title Description</label>
+                              <input type="text" name="description" class="form-control">
+                            </div> 
+							<div class="form-group">
+                              <label class=" text-dark">Title Image</label>
+                              <input type="file" name="img" class="form-control">
+                            </div>  
+                            <div class="text-center mt-5">
+                                <button name="addNews" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-               <!-- <div class="register-show">
-                    <h2>REGISTER</h2>
-                    <input type="text" placeholder="Email">
-                    <input type="password" placeholder="Password">
-                    <input type="password" placeholder="Confirm Password">
-                    <input type="button" value="Register">
-                </div>-->
             </div>
+
         </div>
-		<!--end login-->
-		
+    </div>
+	</div>
+	
 		
 		<!-- footer -->
-	<div class="footer-area2">
+	<div class="footer-area">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 col-md-6">
@@ -224,6 +275,6 @@
 	<script src="assets/js/sticker.js"></script>
 	<!-- main js -->
 	<script src="assets/js/main.js"></script>
-	<script src="assets/js/loginn.js"></script>
+	
 	</body>
 </html>

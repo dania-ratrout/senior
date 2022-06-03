@@ -74,8 +74,6 @@ if (isset($_POST['addCategory'])){
 
 
 if (isset($_POST['addProduct'])){  
-
-
     $img=$_FILES['img'];
     $imgName=$img['name'];
     $imgTmpName=$img['tmp_name'];
@@ -86,7 +84,6 @@ if (isset($_POST['addProduct'])){
     $imgNewName ="$randomString.$ext";
     $imgNewNameDB="assets/img/products/";
     $imgNewNameDB .="$randomString.$ext";
-
     $name=$_POST['name'];
     $category_id =$_POST['category_id']; 
     $price=$_POST['price'];
@@ -98,6 +95,46 @@ if (isset($_POST['addProduct'])){
     " '$name','$price','$quantity ','$imgNewNameDB','$description','$Expire_Date','$owner_id' ,'$category_id' "
     ,"addproduct.php");
     move_uploaded_file($imgTmpName,"../assets/img/products/$imgNewName");
+}
+
+if (isset($_POST['addTeam'])){  
+    $img=$_FILES['img'];
+    $imgName=$img['name'];
+    $imgTmpName=$img['tmp_name'];
+    $t=time();
+    $nowDate=date('y,m,d',$t);
+    $randomString="$nowDate".hexdec(uniqid());
+    $ext=pathinfo($imgName,PATHINFO_EXTENSION);
+    $imgNewName ="$randomString.$ext";
+    $imgNewNameDB="assets/img/products/";
+    $imgNewNameDB .="$randomString.$ext";
+    $name=$_POST['name'];
+    $job =$_POST['job']; 
+    add("team","img ,name, job" ,
+    " '$imgNewNameDB','$name','$job' "
+    ,"addTeam.php");
+    move_uploaded_file($imgTmpName,"../assets/img/team/$imgNewName");
+}
+
+if (isset($_POST['addNews'])){  
+    $title=$_POST['title'];
+    $description=$_POST['description'];
+    $created_at=$_POST['created_at'];
+    $status=$_POST['status'];
+    $img=$_FILES['img'];
+    $imgName=$img['name'];
+    $imgTmpName=$img['tmp_name'];
+    $t=time();
+    $nowDate=date('y,m,d',$t);
+    $randomString="$nowDate".hexdec(uniqid());
+    $ext=pathinfo($imgName,PATHINFO_EXTENSION);
+    $imgNewName ="$randomString.$ext";
+    $imgNewNameDB="assets/img/latest-news/";
+    $imgNewNameDB .="$randomString.$ext";
+    add("news","title, description, created_at, status, img" ,
+    " '$title','$description','$created_at ','$status','$imgNewNameDB'"
+    ,"addNews.php");
+    move_uploaded_file($imgTmpName,"../assets/img/latest-news/$imgNewName");
 }
 
 function register($table , $cols , $values){

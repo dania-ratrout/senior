@@ -15,13 +15,8 @@ if(isset($_SESSION['id'])){
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
-
 	<!-- title -->
-	<title>Ps-Khan jjj</title>
-
-	
-	
-
+	<title>Ps-Khan</title>
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
 	<!-- google font -->
@@ -92,6 +87,8 @@ if(isset($_SESSION['id'])){
 										<li><a href="profile.php">profile</a></li>
 										<li><a href="myorder.php">myorder</a></li>
 										<li><a href="addproduct.php">add product</a></li>
+										<li><a href="addNews.php">add news</a></li>
+										<li><a href="addTeam.php">add Team</a></li>
 										<li><a href="WaitingList.php">Waiting list</a></li>
 										<li><a href="orderList.php">Order list</a></li>										
 										<li><a href="404.php">404 page</a></li>

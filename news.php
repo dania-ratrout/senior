@@ -1,5 +1,6 @@
 <?php 
 require_once('./handlers/db.php');
+require_once('handlers/data.php');
 $news=getWhere('news', 'status = 1');
 $sponsored=getAll('sponsored');
 ?>
@@ -128,13 +129,22 @@ $sponsored=getAll('sponsored');
 		
 			<div class="row">
 			<div class="grid">
-		
+			<?php 
+                    if(isset($_SESSION['create'])){ ?>
+                        <div class="aletr alert-success h-10
+                         d-flex justify-content-center align-items-center mb-5">
+                            <?= $_SESSION['create']; ?>
+                        </div>
+                    <?php 
+                        unset($_SESSION['create']);    
+                }
+                ?>
 				<div class="g-col-4 ">
 				<?php foreach($news as $index=>$new):?>
 					<div class="single-latest-news">
-						<a href="single-news.php"><img src="<?= $new['img']?>" alt=" " class="latest-news-bg "/></a>
+						<a href="news.php"><img src="<?= $new['img']?>" alt=" " class="latest-news-bg "/></a>
 						<div class="news-text-box2">
-							<h3><a href="single-news.php"><?= $new['title']?></a></h3>
+							<h3><a href="news.php"><?= $new['title']?></a></h3>
 							<p class="blog-meta">
 								<span class="date"><i class="fas fa-calendar"></i><?= $new['created_at']?></span>
 							</p><?= $new['description']?></p>
@@ -166,7 +176,7 @@ $sponsored=getAll('sponsored');
 					</div>
 				</div>
 			</div> -->
-		</div>
+		
 	
 	<!-- end latest news -->
 
