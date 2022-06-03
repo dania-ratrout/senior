@@ -1,5 +1,10 @@
 <?php
-require_once('../Ps-Khan/handlers/db.php');
+require_once('./handlers/db.php');
+session_start();
+
+if (!isset($_SESSION['name'])) {
+    header("Location: index.php");
+}
 $customerr=getOnce('customer');
 
 ?>
@@ -141,7 +146,8 @@ $customerr=getOnce('customer');
             <div class="tm-bg-primary-dark tm-block tm-block-settings">
             
 				<div class="col-xl-12 col-lg-4 col-md-12 mx-auto mb-4 text-center">
-                    <h2>Welcome , <span class="text-white"><?php "welcome".$customerr['Name'] ?></span></h2>
+				<?php echo "<h1>Welcome " . $_SESSION['name'] . "</h1>"; ?>
+                   <!-- <h2>Welcome , <span class="text-white"><?php "welcome".$customerr['Name'] ?></span></h2> -->
 					<div class="container py-5">
         <div class="row">
 

@@ -1,3 +1,28 @@
+<?php 
+require_once('handlers/db.php');
+session_start();
+
+error_reporting(0);
+
+if (isset($_SESSION['name'])) {
+    header("Location: profile.php");
+}
+
+if (isset($_POST['login'])) {
+	$email = $_POST['email'];
+	$password = md5($_POST['password']);
+
+	$sql = "SELECT * FROM customer WHERE email='$email' AND password='$password'";
+	$result = mysqli_query($conn, $sql);
+	if ($result->num_rows > 0) {
+		$row = mysqli_fetch_assoc($result);
+		$_SESSION['username'] = $row['name'];
+		header("Location: profile.php");
+	} else {
+		echo "<script>alert('Woops! Email or Password is Wrong.')</script>";
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,10 +134,10 @@
             <div class="white-panel">
                 <div class="login-show">
                     <h2>LOGIN</h2>
-					<form>
-                    <input type="text" placeholder="Email" required>
-                    <input type="password" placeholder="Password" required>
-					<button  type="submit" class="btnlogin " >Login</button>
+					<form action="profile.php" method="POST">
+                    <input type="text" placeholder="Email" name="email" value="<?php echo $email; ?>" required>
+                    <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>" required>
+					<button  type="submit" name="login" class="btnlogin " >Login</button>
 					</form>
 					<p>Don't have an account?<a href="register.php">Click here</a></p>
                 </div>
