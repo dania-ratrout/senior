@@ -276,17 +276,6 @@ p:last-child {
   }
 }
 
-@keyframes spinRight {
-  from {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-  to {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-}
-
 .mt-80 {
   margin-top: 80px;
 }
@@ -556,7 +545,7 @@ ul.navbar-nav li.nav-item a.nav-link, ul.navbar-nav li.nav-item.active a.nav-lin
   z-index: 999;
   width: 100%;
   padding: 25px 0px;
-  
+  background-color: rgba(85, 82, 82, 0.39);
   padding-bottom: 25px;
   margin-bottom: 100px;
 
@@ -756,6 +745,7 @@ nav.main-menu li a {
 
 .sticky-wrapper {
   position: absolute;
+  display:  block;
   left: 0;
   top: 0;
   width: 100%;

@@ -18,7 +18,26 @@ function getWhere($table, $where){
     $getAll = "SELECT * FROM $table where $where ";
     $getAll = mysqli_query($conn,$getAll);
     $getAllData = mysqli_fetch_all($getAll,MYSQLI_ASSOC);
+
     return $getAllData;
+}
+
+function getIdByRoleName($table, $name){
+    global $conn ;
+    $getAll = "SELECT id FROM $table where name = '{$name}' ";
+    $getAll = mysqli_query($conn,$getAll);
+    $getId = mysqli_fetch_all($getAll,MYSQLI_ASSOC);
+    
+    return $getId;
+}
+
+function getNameByRoleId($table, $id){
+    global $conn ;
+    $getAll = "SELECT name FROM $table where id = '{$id}' ";
+    $getAll = mysqli_query($conn,$getAll);
+    $getId = mysqli_fetch_all($getAll,MYSQLI_ASSOC);
+    
+    return $getId;
 }
 
 function getOnce($table, $where=1){
@@ -142,8 +161,10 @@ function register($table , $cols , $values){
     $add= "INSERT INTO $table ($cols) VALUES ($values)" ; 
     
     if(mysqli_query($conn,$add)){
-        $_SESSION['id']=mysqli_insert_id($conn);
-        $_SESSION['login']=true;
+        $user = getWhere($table , "id = ".mysqli_insert_id($conn));
+        
+        $_SESSION['user'] = $user;
+        
         header("location: ../index.php");
     }else{
         echo mysqli_error($conn) ;

@@ -2,7 +2,6 @@
     session_start();
     require('function.php') ;
     require('db.php') ;
-
     if($_SERVER['REQUEST_METHOD']=='POST'){
         $data = $_SESSION;
 
@@ -90,9 +89,15 @@
                 $errors[]= "address must be less than 30 letters";
         }
 
-
+        // Check if the email is exist or not
+        $select = mysqli_query($conn, "SELECT * FROM customer WHERE email = '{$email}' ");
+        if (mysqli_num_rows($select)) {
+            $errors[]= "Email is already taken.";
+        }
         if(empty($errors)){
-            register("customer","Name,Email,Password,Phone,Address,Country,Zip,State" ," '$name','$email','$password','$phone','$address','$country','$zip','$state' ");
+            $role= getIdByRoleName('roles' , $_POST["role_name"]);
+            $role_id = $role[0]['id'];
+            register("customer","Name,Email,Password,Phone,Address,Country,Zip,State ,role_id" ," '$name','$email','$password','$phone','$address','$country','$zip','$state' , '$role_id' ");
         }else{
             $_SESSION['errors']=$errors ;
             header('location: ../register.php') ;

@@ -1,9 +1,10 @@
 <?php 
-require_once('./handlers/db.php');
+require_once('handlers/db.php');
 require_once('handlers/data.php');
-$news=getWhere('news', 'status = 1');
 $sponsored=getAll('sponsored');
+$products=getAll('products');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +14,7 @@ $sponsored=getAll('sponsored');
 	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
 	<!-- title -->
-	<title>News</title>
+	<title>Products</title>
 
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
@@ -51,66 +52,74 @@ $sponsored=getAll('sponsored');
 	<!-- navbar -->
 			<?php require_once("./layouts/navbar.php")?>
 	<!-- end navbar -->
-
-	<!-- latest news -->
-	<div class="latest-news mt-250 mb-150">
+	
+	
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
 		<div class="container">
-		
 			<div class="row">
-			<div class="grid">
-			<?php 
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>High quality & reliability</p>
+						<h1>Products</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- products -->
+	<div class="product-section mt-150 mb-150">
+		<div class="container">
+
+			<div class="row">
+                <div class="col-md-12">
+				<?php 
                     if(isset($_SESSION['create'])){ ?>
                         <div class="aletr alert-success h-10
-                         d-flex justify-content-center align-items-center mb-5">
+                         		d-flex justify-content-center align-items-center mb-5">
                             <?= $_SESSION['create']; ?>
                         </div>
                     <?php 
                         unset($_SESSION['create']);    
                 }
                 ?>
-				<div class="g-col-4 ">
-				<?php foreach($news as $index=>$new):?>
-					<div class="single-latest-news">
-						<a href="news.php"><img src="<?= $new['img']?>" alt=" " class="latest-news-bg "/></a>
-						<div class="news-text-box2">
-							<h3><a href="news.php"><?= $new['title']?></a></h3>
-							<p class="blog-meta">
-								<span class="date"><i class="fas fa-calendar"></i><?= $new['created_at']?></span>
-							</p><?= $new['description']?></p>
-							
-							
-				</div>
-			</div>
-						<?php endforeach; ?>
-					</div>
-					
-				</div>
-				</div>					
-			</div>
+                    <div class="product-filters">
+                        <ul>
+						<li data-filter="*" class="filter-active">All</li>
+            <?php  foreach($categorys as $category):?>
+              <li data-filter=".filter-<?= $category['name']?>"><?= $category['name']?></li>
+              <?php endforeach; ?>
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-		<!--	<div class="row">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-12 text-center">
-							<div class="pagination-wrap">
-								<ul>
-									<li><a href="#">Prev</a></li>
-									<li><a href="#">1</a></li>
-									<li><a class="active" href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">Next</a></li>
-								</ul>
-							</div>
+			<div class="row product-lists">
+			<?php foreach($products as $product):?>
+				<div class="col-lg-4 col-md-6 text-center strawberry">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href="single-product.php"><img src="<?= $product['img']?>" alt=""></a>
 						</div>
+						<h3><?= $product['name']?></h3>
+						<p><?= $product['description']?></p>
+						<p class="product-price"><span></span> <?= $product['price']?>$</p>
+						<a href="addToCart.php?id=<?=$product['id']?>" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
 					</div>
 				</div>
-			</div> -->
-		
-	
-	<!-- end latest news -->
+				<?php endforeach; ?>
+			</div>
 
-		<!-- logo carousel -->
-		<div class="logo-carousel-section">
+		
+		</div>
+	</div>
+	<!-- end products -->
+
+	<!-- logo carousel -->
+	<div class="logo-carousel-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -127,12 +136,11 @@ $sponsored=getAll('sponsored');
 	</div>
 	<!-- end logo carousel -->
 
-	<!-- footer -->
-		<?php require_once("./layouts/footer.php")?>
-	<!-- end footer -->
+    <!-- footer -->
+				<?php require_once("./layouts/footer.php")?>
+    <!-- end footer -->
 	
 		<!-- js files -->
     <?php require_once("./layouts/scripts.php")?>
-
 </body>
 </html>

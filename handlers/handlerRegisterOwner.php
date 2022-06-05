@@ -73,16 +73,22 @@
                 }elseif(!maxRange($pphone,30)){
                         $errorss[]= "phone must be less than 21 numbers";
                 }
-                    
+                  // Check if the email is exist or not
+                $select = mysqli_query($conn, "SELECT * FROM product_owners WHERE email = '{$pemail}' ");
+                if (mysqli_num_rows($select)) {
+                    $errorss[]= "Email is already taken.";
+                }   
 
                 if(empty($errorss)){
-                    register("product_owners","Name,Email,Password,Company_name,Company_ID,Phone" ," '$pname','$pemail','$ppassword','$companyname','$companyid','$pphone'");
+                    $role= getIdByRoleName('roles' , $_POST["role_name"]);
+                    $role_id = $role[0]['id'];
+                    register("product_owners","Name,Email,Password,Company_name,Company_ID,Phone,role_id" ," '$pname','$pemail','$ppassword','$companyname','$companyid','$pphone', '$role_id'");
                 }else{
                     $_SESSION['errorss']=$errorss ;
-                    header('location: ../registerOwner.php') ;
+                    header('location: ../register.php') ;
                 }
 
     }else {
-        header('location: ../registerOwner.php') ;
+        header('location: ../register.php') ;
     }
 ?>
